@@ -4,7 +4,7 @@ def apriori_algorithm(data):
     try:
         # Chạy thuật toán Apriori để tìm các itemsets thường xuyên
         frequent_itemsets = apriori(data, min_support=0.5, use_colnames=True)
-
+        num_itemsets = len(frequent_itemsets)
         # Tạo các quy tắc kết hợp từ các itemsets thường xuyên
         # Không cần tham số num_itemsets, chỉ cần metric và min_threshold
         rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1.0)
