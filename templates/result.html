@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Kết quả: {{ algorithm }}</h2>
+<div>
+    {{ result | safe }}
+</div>
+<a href="{{ url_for('choose_algorithm') }}">Quay lại</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Chọn một thuật toán</h2>
+<ul>
+    <li><a href="{{ url_for('run_algorithm', algorithm='preprocessing') }}">Tiền xử lý dữ liệu</a></li>
+    <li><a href="{{ url_for('run_algorithm', algorithm='apriori') }}">Apriori</a></li>
+    <li><a href="{{ url_for('run_algorithm', algorithm='bayes') }}">Bayes</a></li>
+    <li><a href="{{ url_for('run_algorithm', algorithm='kmeans') }}">K-means</a></li>
+    <li><a href="{{ url_for('run_algorithm', algorithm='decision_tree') }}">Cây quyết định</a></li>
+</ul>
+{% endblock %}
