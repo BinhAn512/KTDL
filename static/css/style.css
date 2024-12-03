@@ -1,112 +1,260 @@
-/* Reset and base styles */
+/* Reset CSS */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Global Styles */
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f4f6f9;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Header and Navigation */
-[role="main"] {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    margin-top: 20px;
-}
-
-h1, h2, h3 {
-    color: #2c3e50;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #3498db;
-}
-
-h1 { font-size: 2em; }
-h2 { font-size: 1.5em; }
-
-/* Links */
-a {
-    color: #3498db;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: #2980b9;
-    text-decoration: underline;
-}
-
-/* List Styles */
-ul {
-    list-style-type: none;
-    margin-left: 20px;
-}
-
-ul li {
-    margin-bottom: 10px;
-    padding: 10px;
     background-color: #f8f9fa;
-    border-left: 4px solid #3498db;
-    transition: background-color 0.3s ease;
+    color: #333;
+    padding: 0;
+    margin: 0;
 }
 
-ul li:hover {
-    background-color: #e9ecef;
+/* Header Styles */
+header {
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: #fff;
+    padding: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-/* Result Section */
-div[role="main"] > div {
-    background-color: #f1f3f5;
-    border-radius: 4px;
-    padding: 15px;
-    margin-top: 20px;
-    overflow-x: auto;
+header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-/* Navigation Links */
-[role="main"] a {
-    display: inline-block;
-    margin: 10px 0;
-    padding: 10px 15px;
-    background-color: #3498db;
-    color: white;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+header nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
 
-[role="main"] a:hover {
-    background-color: #2980b9;
+header nav a {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
     text-decoration: none;
+    margin: 0 10px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+header nav a:hover {
+    background: #ffcc00;
+    color: #333;
+}
+
+
+
+/* Main Content Styles */
+main {
+    max-width: 1000px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Styles */
+form {
+    margin: 20px 0;
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+form input,
+form select,
+form button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+form button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background: #0056b3;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th,
+table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+table tr:hover {
+    background: #f1f1f1;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #007bff;
+    color: #fff;
+    font-size: 0.9rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Image Display */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Success and Error Messages */
+.success {
+    color: #155724;
+    background: #d4edda;
+    padding: 15px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.error {
+    color: #721c24;
+    background: #f8d7da;
+    padding: 15px;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Button Links */
+button.link {
+    background: none;
+    border: none;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1rem;
+}
+
+button.link:hover {
+    color: #0056b3;
 }
 
 /* Responsive Design */
-@media screen and (max-width: 600px) {
-    body {
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    main {
+        padding: 20px;
+    }
+
+    form button {
+        font-size: 1rem;
+    }
+
+    table th,
+    table td {
         padding: 10px;
     }
-
-    [role="main"] {
-        padding: 15px;
-    }
-
-    h1 { font-size: 1.5em; }
-    h2 { font-size: 1.2em; }
 }
 
-/* Code and Technical Content */
-pre, code {
-    background-color: #f1f3f5;
-    border-radius: 4px;
-    padding: 5px;
-    font-family: 'Courier New', Courier, monospace;
+/* Style cho nút "Chọn thuật toán" */
+a.button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background: #007bff;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+a.button:hover {
+    background: #0056b3;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+footer {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 20px;
+    margin-top: 470px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 0.9rem;
+    color: #555;
+}
+
+footer .footer-content p {
+    margin: 4px 0;
+    line-height: 1.6;
+}
+
+footer strong {
+    color: #007bff;
+}
+
+footer p:last-child {
+    font-size: 0.8rem;
+    color: #777;
 }

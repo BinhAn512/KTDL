@@ -1,8 +1,34 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Kết quả: {{ algorithm }}</h2>
-<div>
-    {{ result | safe }}
-</div>
-<a href="{{ url_for('choose_algorithm') }}">Quay lại</a>
+
+    <h1>{{ title }}</h1>
+    <h3>Thuật toán: {{ algorithm }}</h3>
+
+    <!-- Hiển thị bảng dữ liệu gốc -->
+    <h4>Dữ liệu gốc:</h4>
+    <div>
+        {{ data_html | safe }}
+    </div>
+
+    <h2>Kết quả của thuật toán {{ algorithm }}</h2>
+
+    <!-- Hiển thị bảng dữ liệu nếu có -->
+    {% if result %}
+        <div class="table-container">
+            <h3>Kết quả phân tích dữ liệu:</h3>
+            <div>{{ result | safe }}</div>
+        </div>
+    {% endif %}
+
+    <!-- Hiển thị biểu đồ nếu có -->
+    {% if image_path %}
+        <div class="chart-container">
+            <h3>Biểu đồ trực quan hóa:</h3>
+            <img src="{{ url_for('static', filename=image_path) }}" alt="Biểu đồ trực quan hóa">
+        </div>
+    {% endif %}
+
+    <a href="{{ url_for('choose_algorithm') }}" class="button">Quay lại</a>
+    
 {% endblock %}

@@ -1,11 +1,20 @@
 {% extends "base.html" %}
+
 {% block content %}
-<h2>Chọn một thuật toán</h2>
-<ul>
-    <li><a href="{{ url_for('run_algorithm', algorithm='preprocessing') }}">Tiền xử lý dữ liệu</a></li>
-    <li><a href="{{ url_for('run_algorithm', algorithm='apriori') }}">Apriori</a></li>
-    <li><a href="{{ url_for('run_algorithm', algorithm='bayes') }}">Bayes</a></li>
-    <li><a href="{{ url_for('run_algorithm', algorithm='kmeans') }}">K-means</a></li>
-    <li><a href="{{ url_for('run_algorithm', algorithm='decision_tree') }}">Cây quyết định</a></li>
-</ul>
+<h2>Chọn thuật toán để chạy</h2>
+
+<form method="GET" action="{{ url_for('upload_csv') }}">
+    <label for="algorithm">Chọn thuật toán:</label>
+    <select name="algorithm" id="algorithm" required>
+        <option value="preprocessing">Tiền xử lý dữ liệu</option>
+        <option value="apriori">Apriori</option>
+        <option value="bayes">Bayes</option>
+        <option value="k-means">K-Means</option>
+        <option value="decision_tree">Cây quyết định</option>
+        <option value="kohonen">Kohonen</option>
+    </select>
+    <button type="submit">Tiếp tục</button>
+</form>
+
+<a href="{{ url_for('index') }}" class="button">Quay lại</a>
 {% endblock %}

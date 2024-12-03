@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Tải lên file CSV cho thuật toán: {{ algorithm|capitalize }}</h2>
+
+<form method="POST" action="{{ url_for('process_csv', algorithm=algorithm) }}" enctype="multipart/form-data">
+    <label for="file">Chọn file CSV:</label>
+    <input type="file" name="file" id="file" accept=".csv" required>
+    <button type="submit">Chạy thuật toán</button>
+</form>
+
+<a href="{{ url_for('choose_algorithm') }}" class="button">Quay lại</a>
+{% endblock %}
