@@ -55,4 +55,4 @@ def kmeans_algorithm(data, n_clusters=3, max_iter=100, tolerance=1e-4):
     result_data = pd.DataFrame(data, columns=[f'Feature_{i+1}' for i in range(n_features)])
     result_data['Cluster'] = labels
 
-    return result_data.head().to_html(), image_path
+    return result_data.to_html(), image_path

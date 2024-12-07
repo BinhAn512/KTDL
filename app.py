@@ -39,6 +39,7 @@ def upload_csv():
 @app.route('/process_csv/<algorithm>', methods=['POST'])
 def process_csv(algorithm):
     file = request.files.get('file')  # Lấy file CSV
+   
 
     if not file:
         return "Bạn chưa tải lên file CSV.", 400
@@ -54,8 +55,10 @@ def process_csv(algorithm):
         if algorithm == 'preprocessing':
             result = preprocess_data(data)
             image_path = None
-        elif algorithm == 'apriori':
-            result = apriori_algorithm(data)
+        if algorithm == 'apriori':
+            min_support = float(request.form.get('min_support', 0.3))
+            min_confidence = float(request.form.get('min_confidence', 0.7))
+            result = apriori_algorithm(data, min_support=min_support, min_confidence=min_confidence)
             image_path = None
         elif algorithm == 'bayes':
             result = bayes_algorithm(data)
@@ -80,6 +83,7 @@ def process_csv(algorithm):
         image_path=image_path,
         title="Kết quả"
     )
+
 
     
 def upload():
