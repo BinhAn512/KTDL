@@ -1,54 +1,89 @@
 import pandas as pd
 import numpy as np
 
-def bayes_algorithm(data):
-    # Tách dữ liệu và nhãn
-    X = data.iloc[:, :-1].values  # Các đặc trưng
-    y = data.iloc[:, -1].values   # Nhãn
-
-    # Tính toán các xác suất của các lớp (P(Class))
-    classes = np.unique(y)  # Lấy các lớp duy nhất
-    class_probs = {}
-    for c in classes:
-        class_probs[c] = np.sum(y == c) / len(y)
+def bayes_algorithm(data, feature_list=None, feature_values=None, laplace_smoothing=False):
+    # Input validation
+    if not feature_list or not feature_values:
+        return {
+            'error': "Insufficient information for prediction",
+            'prediction': None,
+            'dataframe': None,
+            'html_table': None
+        }
     
-    # Tính toán các xác suất có điều kiện (P(Feature|Class))
-    feature_probs = {}
-    for c in classes:
-        # Lọc các dữ liệu của lớp c
-        class_data = X[y == c]
-        feature_probs[c] = {}
-        for i in range(X.shape[1]):
-            # Tính toán xác suất cho mỗi đặc trưng với giả định là phân phối chuẩn
-            feature_probs[c][i] = {
-                'mean': np.mean(class_data[:, i]),
-                'std': np.std(class_data[:, i])
-            }
+    # Check feature list and values match
+    if len(feature_list) != len(feature_values):
+        return {
+            'error': "Number of features and values do not match",
+            'prediction': None,
+            'dataframe': None,
+            'html_table': None
+        }
     
-    # Hàm tính xác suất điều kiện P(Feature|Class)
-    def calculate_conditional_prob(x, c):
-        prob = 1.0
-        for i in range(len(x)):
-            mean = feature_probs[c][i]['mean']
-            std = feature_probs[c][i]['std']
-            # Tính xác suất theo phân phối chuẩn
-            prob *= (1 / (std * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x[i] - mean) ** 2 / std ** 2))
-        return prob
+    # Identify target column (last column)
+    target_column = data.columns[-1]
     
-    # Dự đoán lớp cho dữ liệu mới
-    def predict(x):
-        posteriors = {}
-        for c in classes:
-            # Tính xác suất hậu nghiệm P(Class|Features) = P(Features|Class) * P(Class)
-            posterior = class_probs[c] * calculate_conditional_prob(x, c)
-            posteriors[c] = posterior
-        # Chọn lớp có xác suất hậu nghiệm cao nhất
-        return max(posteriors, key=posteriors.get)
-
-    # Dự đoán cho tất cả các mẫu trong tập dữ liệu
-    predictions = [predict(x) for x in X]
+    # Filter data based on input features
+    filtered_data = data.copy()
+    for feature, value in zip(feature_list, feature_values):
+        # if isinstance(filtered_data[feature][0], str) == True:
+        filtered_data = filtered_data[filtered_data[feature] == value]
+        # else:
+        #     filtered_data = filtered_data[filtered_data[feature] == float(value)]
     
-    # Tính độ chính xác
-    accuracy = np.mean(predictions == y)
-    return f"Độ chính xác: {accuracy:.2f}"
-
+    # Check if any data remains after filtering
+    if len(filtered_data) == 0:
+        return {
+            'error': "No data found matching the specified features",
+            'prediction': None,
+            'dataframe': None,
+            'html_table': None
+        }
+    
+    # Get unique classes
+    classes = filtered_data[target_column].unique()
+    
+    # Calculate class probabilities
+    class_probabilities = {}
+    total_samples = len(filtered_data)
+    
+    for cls in classes:
+        # Prior probability of the class
+        class_count = len(filtered_data[filtered_data[target_column] == cls])
+        class_probabilities[cls] = class_count / total_samples
+    
+    # Apply Laplace smoothing if requested
+    if laplace_smoothing:
+        total_classes = len(classes)
+        class_probabilities = {
+            cls: (count + 1) / (total_samples + total_classes)
+            for cls, count in class_probabilities.items()
+        }
+    
+    # Select class with highest probability
+    predicted_class = max(class_probabilities, key=class_probabilities.get)
+    
+    # Prepare result data for formatting
+    result_data = [
+        {
+            'Đặc trưng': feature,
+            'Giá trị': value
+        } for feature, value in zip(feature_list, feature_values)
+    ]
+    
+    # Add prediction to result data
+    result_data.append({
+        'Đặc trưng': 'Kết quả dự đoán',
+        'Giá trị': str(predicted_class)
+    })
+    
+    # Create DataFrame
+    result_df = pd.DataFrame(result_data)
+    
+    # Create HTML table
+    html_table = result_df.to_html(
+        classes='table table-striped table-bordered', 
+        index=False, 
+        escape=False
+    )
+    return html_table
