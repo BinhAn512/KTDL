@@ -3,8 +3,6 @@
     <h1>{{ title }}</h1>
     
     <form action="{{ url_for('process_csv', algorithm=algorithm, file=file) }}" method="POST">
-        <input type="file" name="file" id="file" accept=".csv" value="../data/{{file.filename}}"" readonly required>
-        <div>{{file.filename}}</div>
         {% for feature in feature_data %}
         <div>
             <label for="selected_{{ feature }}">Chọn giá trị cho {{ feature }}:</label>
@@ -18,8 +16,8 @@
         {% endfor %}
         
         <div>
-            <label for="laplace_smoothing">Sử dụng kỹ thuật làm trơn Laplace:</label>
-            <input type="checkbox" name="laplace_smoothing" value="yes" id="laplace_yes" checked>
+            <label for="laplace_smoothing">Sử dụng kỹ thuật làm trơn Laplace: <input style="width: auto" type="checkbox" name="laplace_smoothing" value="yes" id="laplace_smoothing" checked></label>
+            
         </div>
         
         <button type="submit">Chạy thuật toán Bayes</button>

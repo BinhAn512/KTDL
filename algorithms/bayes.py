@@ -26,19 +26,16 @@ def bayes_algorithm(data, feature_list=None, feature_values=None, laplace_smooth
     # Filter data based on input features
     filtered_data = data.copy()
     for feature, value in zip(feature_list, feature_values):
-        # if isinstance(filtered_data[feature][0], str) == True:
         filtered_data = filtered_data[filtered_data[feature] == value]
-        # else:
-        #     filtered_data = filtered_data[filtered_data[feature] == float(value)]
     
     # Check if any data remains after filtering
-    if len(filtered_data) == 0:
-        return {
-            'error': "No data found matching the specified features",
-            'prediction': None,
-            'dataframe': None,
-            'html_table': None
-        }
+    # if len(filtered_data) == 0:
+    #     return {
+    #         'error': "No data found matching the specified features",
+    #         'prediction': None,
+    #         'dataframe': None,
+    #         'html_table': None
+    #     }
     
     # Get unique classes
     classes = filtered_data[target_column].unique()

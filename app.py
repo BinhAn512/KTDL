@@ -52,7 +52,10 @@ def choose_bayes_data():
 
 @app.route('/process_csv/<algorithm>', methods=['POST'])
 def process_csv(algorithm):
-    filename = session.get('upload_filename')  # Lấy file CSV    
+    if (algorithm == 'bayes'):
+        filename = session.get('upload_filename')  # Lấy file CSV
+    else:
+        file = request.files.get('file')
     # file = pd.read_csv(f"data/{filename}")
    
 
@@ -61,7 +64,10 @@ def process_csv(algorithm):
 
     try:
         # Đọc dữ liệu từ file CSV
-        data = pd.read_csv(f"data/{filename}")
+        if algorithm == 'bayes':
+            data = pd.read_csv(f"data/{filename}")
+        else:
+            data = pd.read_csv(file)
 
         # Chuyển đổi dữ liệu gốc sang HTML để hiển thị
         data_html = data.to_html(classes="table table-striped", index=False)
@@ -70,7 +76,7 @@ def process_csv(algorithm):
         if algorithm == 'preprocessing':
             result = preprocess_data(data)
             image_path = None
-        if algorithm == 'apriori':
+        elif algorithm == 'apriori':
             min_support = float(request.form.get('min_support', 0.3))
             min_confidence = float(request.form.get('min_confidence', 0.7))
             result = apriori_algorithm(data, min_support=min_support, min_confidence=min_confidence)
@@ -83,15 +89,15 @@ def process_csv(algorithm):
                 if value:
                     feature_values.append(value)
                     feature_names.append(feature)
-            # if request.form.get("laplace_smoothing") == 'yes':
-            #     laplace_smoothing = True
-            # else:
-            #     laplace_smoothing = False
+            if request.form.get("laplace_smoothing") == 'yes':
+                laplace_smoothing = True
+            else:
+                laplace_smoothing = False
             result = bayes_algorithm(
             data, 
             feature_list=feature_names, 
             feature_values=feature_values,
-            # laplace_smoothing=bool(int(laplace_smoothing))
+            laplace_smoothing=bool(int(laplace_smoothing))
             )
             image_path = None
         elif algorithm == 'k-means':
