@@ -3,6 +3,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def kmeans_algorithm(data, n_clusters=3, max_iter=100, tolerance=1e-4):
+    # Kiểm tra điều kiện dữ liệu đầu vào
+    if n_clusters <= 0:
+        raise ValueError("Số cụm (n_clusters) phải lớn hơn 0.")
+    if n_clusters > len(data):
+        raise ValueError("Số cụm (n_clusters) không được vượt quá số lượng mẫu trong dữ liệu.")
+    
     # Chuyển đổi dữ liệu thành mảng numpy
     data = data.values
     n_samples, n_features = data.shape
@@ -32,7 +38,9 @@ def kmeans_algorithm(data, n_clusters=3, max_iter=100, tolerance=1e-4):
         if centroid_shift < tolerance:
             print(f"K-Means hội tụ sau {iteration + 1} vòng lặp.")
             break
-
+    else:
+        print("K-Means không hội tụ sau số vòng lặp tối đa.")
+        
     # Vẽ biểu đồ
     plt.figure(figsize=(8, 6))
     for i in range(n_clusters):

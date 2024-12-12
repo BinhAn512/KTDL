@@ -101,7 +101,8 @@ def process_csv(algorithm):
             )
             image_path = None
         elif algorithm == 'k-means':
-            result, image_path = kmeans_algorithm(data)
+            n_clusters = int(request.form.get('n_clusters', 3))
+            result, image_path = kmeans_algorithm(data, n_clusters=n_clusters)
         elif algorithm == 'decision_tree':
             result, image_path = decision_tree_algorithm(data)
         elif algorithm == 'kohonen':

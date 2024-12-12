@@ -15,7 +15,11 @@
             <label for="min_confidence">Min Confidence:</label>
             <input type="number" step="0.01" name="min_confidence" id="min_confidence" required>
         <br><br>
-            {% endif %}
+        {% elif algorithm == 'k-means' %}
+            <label for="n_clusters">Số cụm (n_clusters):</label>
+            <input type="number" name="n_clusters" id="n_clusters" min="1" required>
+            <br><br>
+        {% endif %}
             
         <button type="submit">Chạy thuật toán</button>
     </form>
